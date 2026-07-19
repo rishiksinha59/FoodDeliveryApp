@@ -36,4 +36,5 @@ pnpm-debug.log*
 lerna-debug.log*
 
 # Uploads directory
-backend/uploads/
+backend/uploads/*
+!backend/uploads/food_*.png

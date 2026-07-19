@@ -244,30 +244,34 @@ export const seedDatabase = async () => {
         console.log("Seeding assets to database...");
 
         // 1. Ensure uploads directory exists
-        const uploadsDir = path.resolve(__dirname, "../uploads");
-        if (!fs.existsSync(uploadsDir)) {
-            fs.mkdirSync(uploadsDir, { recursive: true });
-        }
-
-        // 2. Copy image files from frontend/src/assets to backend/uploads
-        const assetsDir = path.resolve(__dirname, "../../frontend/src/assets");
-        let copiedCount = 0;
-
-        for (const food of seedFoods) {
-            const srcPath = path.join(assetsDir, food.image);
-            const destPath = path.join(uploadsDir, food.image);
-
-            if (fs.existsSync(srcPath)) {
-                if (!fs.existsSync(destPath)) {
-                    fs.copyFileSync(srcPath, destPath);
-                    copiedCount++;
-                }
-            } else {
-                console.warn(`Source image not found: ${srcPath}`);
+        try {
+            const uploadsDir = path.resolve(__dirname, "../uploads");
+            if (!fs.existsSync(uploadsDir)) {
+                fs.mkdirSync(uploadsDir, { recursive: true });
             }
-        }
 
-        console.log(`Copied ${copiedCount} asset images to backend/uploads.`);
+            // 2. Copy image files from frontend/src/assets to backend/uploads
+            const assetsDir = path.resolve(__dirname, "../../frontend/src/assets");
+            let copiedCount = 0;
+
+            for (const food of seedFoods) {
+                const srcPath = path.join(assetsDir, food.image);
+                const destPath = path.join(uploadsDir, food.image);
+
+                if (fs.existsSync(srcPath)) {
+                    if (!fs.existsSync(destPath)) {
+                        fs.copyFileSync(srcPath, destPath);
+                        copiedCount++;
+                    }
+                } else {
+                    console.warn(`Source image not found: ${srcPath}`);
+                }
+            }
+
+            console.log(`Copied ${copiedCount} asset images to backend/uploads.`);
+        } catch (copyError) {
+            console.warn("Failed to copy assets to uploads directory (filesystem may be read-only):", copyError.message);
+        }
 
         // 3. Insert food documents to MongoDB
         await foodModel.insertMany(seedFoods);
