@@ -1,4 +1,4 @@
-# Tomato - MERN Stack Food Delivery Application
+# Appetizer - MERN Stack Food Delivery Application
 
 A modern, responsive, and full-featured MERN (MongoDB, Express.js, React, Node.js) stack food delivery application. The repository contains three separate services managed in a monorepo setup: a user storefront, an administrative dashboard, and a robust backend API.
 
