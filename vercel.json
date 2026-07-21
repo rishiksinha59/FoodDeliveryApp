@@ -2,6 +2,9 @@
     "functions": {
         "backend/server.js": {
             "includeFiles": "backend/uploads/**"
+        },
+        "server.js": {
+            "includeFiles": "uploads/**"
         }
     },
     "services": {
