@@ -1,12 +1,4 @@
 {
-    "functions": {
-        "backend/server.js": {
-            "includeFiles": "backend/uploads/**"
-        },
-        "server.js": {
-            "includeFiles": "uploads/**"
-        }
-    },
     "services": {
         "frontend": {
             "root": "frontend",
@@ -18,7 +10,12 @@
         },
         "backend": {
             "root": "backend",
-            "entrypoint": "server.js"
+            "entrypoint": "server.js",
+            "functions": {
+                "server.js": {
+                    "includeFiles": "uploads/**"
+                }
+            }
         }
     },
     "rewrites": [
