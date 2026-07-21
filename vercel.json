@@ -1,4 +1,9 @@
 {
+    "functions": {
+        "backend/server.js": {
+            "includeFiles": "backend/uploads/**"
+        }
+    },
     "services": {
         "frontend": {
             "root": "frontend",
