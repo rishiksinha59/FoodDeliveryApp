@@ -6,6 +6,7 @@ const StoreContextProvider = (props) =>{
     const url = import.meta.env.PROD ? "" : "http://localhost:4000"
     const [token,setToken]=useState('')
     const [food_list,setFoodList]=useState([])
+    const [loading, setLoading] = useState(true)
     const addToCart=async(itemId)=>{
         if(!cartItems[itemId]){
             setCartItems((prev)=>({...prev,[itemId]:1}))
@@ -35,8 +36,15 @@ const StoreContextProvider = (props) =>{
         return totalAmount;
     }
     const fetchFoodList=async()=>{
-        const response = await axios.get(url+'/api/food/list')
-        setFoodList(response.data.data)
+        try {
+            setLoading(true)
+            const response = await axios.get(url+'/api/food/list')
+            setFoodList(response.data.data)
+        } catch (error) {
+            console.error("Error fetching food list:", error);
+        } finally {
+            setLoading(false)
+        }
     }
     const loadCartData=async(token)=>{
         const response = await axios.post(url+'/api/cart/get',{},{headers:{token}})
@@ -66,7 +74,8 @@ const StoreContextProvider = (props) =>{
         getTotalCartAmount,
         url,
         token,
-        setToken
+        setToken,
+        loading
     }
     return (
         <StoreContext.Provider value={contextValue}>

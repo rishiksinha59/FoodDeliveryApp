@@ -7,7 +7,6 @@ const FoodItem = ({id,name,price,description,image}) => {
   // const [itemCount, setItemCount] = useState(0);
   const {cartItems, addToCart, removeFromCart,url}=useContext(StoreContext)
 
-  console.log("FoodItem evaluation details:", { id, name, price, description, image, cartItems, url });
   if (!id || !name || !price || !description || !image || !cartItems || url === undefined) {
     console.warn("Missing required props or context values in FoodItem:", { id, name, cartItems });
     return null; // prevent rendering
